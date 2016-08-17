@@ -33,7 +33,11 @@ namespace PlasticNotifier
             ToastNotificationManager.CreateToastNotifier(appId).Show(toast);
         }
 
-        internal static void ShowImageToast(string appId, string title, string text)
+        internal static void ShowImageToast(
+            string appId,
+            string title,
+            string text,
+            string filePath)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(
                 ToastTemplateType.ToastImageAndText02);
@@ -44,7 +48,7 @@ namespace PlasticNotifier
             stringElements[1].AppendChild(toastXml.CreateTextNode(text));
 
             // Specify the absolute path to an image
-            String imagePath = "file:///" + Path.GetFullPath("icon-location-30x30.png");
+            String imagePath = "file:///" + filePath;
             XmlNodeList imageElements = toastXml.GetElementsByTagName("image");
             imageElements[0].Attributes.GetNamedItem("src").NodeValue = imagePath;
 

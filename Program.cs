@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using Codice.CmdRunner;
 
@@ -30,6 +31,8 @@ namespace PlasticNotifier
 
         static void MonitorChangesets(object o)
         {
+            string logoFile = CreateTemporaryImageForToast();
+
             CommandLineArguments cla = o as CommandLineArguments;
 
             LaunchCommand.Get().SetCm(cla.CmCommand);
@@ -75,12 +78,25 @@ namespace PlasticNotifier
                     Toaster.ShowImageToast(
                         APP_ID,
                         string.Format("{0} - {1}", parts[1], parts[2]),
-                        parts[3]);
+                        parts[3],
+                        logoFile);
                 }
 
                 last = last = DateTime.Now;
                 System.Threading.Thread.Sleep(cla.PollIntervalSeconds * 1000);
             }
+        }
+
+        static string CreateTemporaryImageForToast()
+        {
+            string fileName = Path.Combine(Path.GetTempPath(), "plasticlogo.png");
+
+            if (File.Exists(fileName))
+                return fileName;
+
+            Resources.plasticlogo.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+
+            return fileName;
         }
 
         class CommandLineArguments
