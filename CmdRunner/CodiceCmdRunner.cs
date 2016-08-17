@@ -8,7 +8,7 @@ namespace Codice.CmdRunner
 {
     internal class CodiceCmdRunner : BaseCmdRunner
     {
-        protected int ReadFileOutputUnix(
+        int ReadFileOutputUnix(
             Process proc,
             string outputfile,
             out string output,
@@ -64,7 +64,7 @@ namespace Codice.CmdRunner
             return result;
         }
 
-        protected int ReadFileOutputWindows(Process proc, string outputfile, out string output,
+        int ReadFileOutputWindows(Process proc, string outputfile, out string output,
             out string error)
         {
             bool bDone = false;
@@ -123,7 +123,7 @@ namespace Codice.CmdRunner
             return result;
         }
 
-        protected int ReadStdOutput(Process proc, out string output, out string error)
+        int ReadStdOutput(Process proc, out string output, out string error)
         {
             ReadAsync reader = new ReadAsync(ReadALine);
             bool bDone = false;
@@ -165,7 +165,7 @@ namespace Codice.CmdRunner
             return result;
         }
 
-        protected int RunWait(Process proc, int initWait, ref int lastElapsed,
+        int RunWait(Process proc, int initWait, ref int lastElapsed,
             ref double totSeconds, out string error)
         {
             Thread.Sleep(10);
@@ -223,19 +223,9 @@ namespace Codice.CmdRunner
             return 0;
         }
 
-        protected string ReadALine(StreamReader reader)
+        string ReadALine(StreamReader reader)
         {
             return reader.ReadLine();
-        }
-
-        internal void DontTimeout()
-        {
-            mbTimeOut = false;
-        }
-
-        internal void WorkWithoutFileCommunication()
-        {
-            USE_FILE_COMMUNICATION = false;
         }
 
         internal override int RunAndWait(string cmd, string workingdir, out string output,
@@ -244,10 +234,14 @@ namespace Codice.CmdRunner
             return RunAndWait(cmd, workingdir, out output, out error, true);
         }
 
-        internal override int RunAndWait(string cmd, string workingdir, out string output,
-            out string error, bool bShell)
+        internal override int RunAndWait(
+            string cmd,
+            string workingdir,
+            out string output,
+            out string error,
+            bool bShell)
         {
-            if (!bShell || !cmd.StartsWith("bcm"))
+            if (!bShell || !cmd.StartsWith("bcm") || !cmd.StartsWith("cm"))
             {
                 return base.RunAndWait(cmd, workingdir, out output, out error);
             }
@@ -298,7 +292,7 @@ namespace Codice.CmdRunner
             return result;
         }
 
-        private int GetSpinTime()
+        int GetSpinTime()
         {
             if (mSpinTime != -1) return mSpinTime;
 
@@ -307,7 +301,7 @@ namespace Codice.CmdRunner
             return mSpinTime;
         }
 
-        private int GetMaxWaitTime()
+        int GetMaxWaitTime()
         {
             if (mMaxWaitTime != -1) return mMaxWaitTime;
 
@@ -316,7 +310,7 @@ namespace Codice.CmdRunner
             return mMaxWaitTime;
         }
 
-        private int GetMaxWaitTimeAll()
+        int GetMaxWaitTimeAll()
         {
             if (mMaxWaitTimeAll != -1) return mMaxWaitTimeAll;
 
@@ -325,7 +319,7 @@ namespace Codice.CmdRunner
             return mMaxWaitTimeAll;
         }
 
-        private bool TryToOpenFile(string filename, ref StreamReader streamReader)
+        bool TryToOpenFile(string filename, ref StreamReader streamReader)
         {
             if (!File.Exists(filename))
                 return false;
@@ -342,7 +336,7 @@ namespace Codice.CmdRunner
             }
         }
 
-        private bool ReadFileContent(string filename, ref string output)
+        bool ReadFileContent(string filename, ref string output)
         {
             if (!File.Exists(filename))
                 return false;
@@ -368,7 +362,7 @@ namespace Codice.CmdRunner
             }
         }
 
-        private Process InitCmdProc(string workingdir)
+        Process InitCmdProc(string workingdir)
         {
             string shellcmd = LaunchCommand.Get().GetCmShellCommand();
             shellcmd = shellcmd.Replace("[GENDATESTAMP]", DateTime.Now.ToString(
@@ -394,22 +388,22 @@ namespace Codice.CmdRunner
             return result;
         }
 
-        protected bool USE_FILE_COMMUNICATION = true; // communicate with cm shell using a file
+        bool USE_FILE_COMMUNICATION = true; // communicate with cm shell using a file
 
-        private const int DEFAULT_SPIN_TIME = 10 * SECOND;
-        private const int DEFAULT_MAX_WAIT_TIME = 8 * MINUTE;
-        private const int DEFAULT_MAX_WAIT_TIME_ALL = 30 * MINUTE;
+        const int DEFAULT_SPIN_TIME = 10 * SECOND;
+        const int DEFAULT_MAX_WAIT_TIME = 8 * MINUTE;
+        const int DEFAULT_MAX_WAIT_TIME_ALL = 30 * MINUTE;
 
-        private int mSpinTime = -1;
-        private int mMaxWaitTime = -1;
-        private int mMaxWaitTimeAll = -1;
+        int mSpinTime = -1;
+        int mMaxWaitTime = -1;
+        int mMaxWaitTimeAll = -1;
 
         const int SECOND = 1000;
         const int MINUTE = 60 * SECOND;
 
-        private bool mbTimeOut = true;
+        bool mbTimeOut = true;
 
-        private static string COMMAND_RESULT = "CommandResult";
+        static string COMMAND_RESULT = "CommandResult";
 
         delegate string ReadAsync(StreamReader reader);
     }

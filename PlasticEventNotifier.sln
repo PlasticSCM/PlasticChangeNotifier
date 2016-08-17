@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watcher", "Watcher.csproj", "{BC3AF8B3-FB25-4D93-8FD5-F82321703E7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlasticNotifier", "PlasticNotifier.csproj", "{BC3AF8B3-FB25-4D93-8FD5-F82321703E7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

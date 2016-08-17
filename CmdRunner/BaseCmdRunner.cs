@@ -12,31 +12,12 @@ namespace Codice.CmdRunner
 
     internal class BaseCmdRunner
     {
-        public void InitConsole(IConsoleWriter writer)
-        {
-            mConsoleWriter = writer;
-        }
-
-        public int InternalExecuteCommand(string command, string path)
-        {
-            WriteCommand(path, command);
-
-            try
-            {
-                int result = RunAndWait(command, path);
-
-                ProcessCommandResult(command, result);
-
-                return result;
-            }
-            catch (Exception e)
-            {
-                return ManageException(command, path, e);
-            }
-        }
-
         public int InternalExecuteCommand(
-            string command, string path, string input, out string output, out string error,
+            string command,
+            string path,
+            string input,
+            out string output,
+            out string error,
             bool bUseCmShell)
         {
             output = string.Empty;
@@ -119,11 +100,6 @@ namespace Codice.CmdRunner
             return p;
         }
 
-        internal void SetEnvironmentVariables(Hashtable variables)
-        {
-            mEnvironmentVariables = variables;
-        }
-
         internal virtual int RunAndWait(string cmd, string workingdir, out string output,
             out string error, bool bUseCmShell)
         {
@@ -169,21 +145,7 @@ namespace Codice.CmdRunner
             }
         }
 
-        internal virtual int RunAndWait(string cmd, string workingdir)
-        {
-            Process p = InternalRun(cmd, workingdir, false);
-            try
-            {
-                p.WaitForExit();
-                return p.ExitCode;
-            }
-            finally
-            {
-                p.Close();
-            }
-        }
-
-        private bool IsWindows()
+        bool IsWindows()
         {
             switch (Environment.OSVersion.Platform)
             {
@@ -195,15 +157,15 @@ namespace Codice.CmdRunner
             }
         }
 
-        private string EscapeArgs(string args)
+        string EscapeArgs(string args)
         {
             if (IsWindows())
                 return args;
-            else
-                return args.Replace("#", "\\#");
+
+            return args.Replace("#", "\\#");
         }
 
-        private int ManageException(string command, string path, Exception e)
+        int ManageException(string command, string path, Exception e)
         {
             string errormsg = string.Format("Error executing command {0} on path {1}. Error = {2}",
                 command, path, e.Message + e.StackTrace);
@@ -212,14 +174,14 @@ namespace Codice.CmdRunner
             return 1;
         }
 
-        private void WriteCommand(string path, string command)
+        void WriteCommand(string path, string command)
         {
             string cmdPrint = string.Format("{0}$ {1}", path, command);
 
             WriteLine(cmdPrint);
         }
 
-        private void ProcessCommandResult(string command, int result)
+        void ProcessCommandResult(string command, int result)
         {
             if (result == 0)
                 return;
@@ -227,8 +189,8 @@ namespace Codice.CmdRunner
             WriteLine(string.Format("Command {0} failed with error code {1}", command, result));
         }
 
-        private Hashtable mEnvironmentVariables = null;
-        private static IConsoleWriter mConsoleWriter = null;
+        Hashtable mEnvironmentVariables = null;
+        static IConsoleWriter mConsoleWriter = null;
         internal Process mCmdProc = null;
     }
 }
