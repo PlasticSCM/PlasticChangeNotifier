@@ -1,17 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Xml.Serialization;
 
 namespace Codice.CmdRunner
 {
-    [Serializable]
-    public class LaunchCommandConfig
-    {
-        public string FullServerCommand;
-        public string CmShellComand;
-        public string ClientPath;
-    }
-
     public class LaunchCommand
     {
         public static LaunchCommand Get()
@@ -25,35 +15,23 @@ namespace Codice.CmdRunner
         public void SetCm(string cm)
         {
             mExecutablePath = cm;
+
+            Console.WriteLine("cm set to {0}", mExecutablePath);
         }
 
         public string GetCmShellCommand()
         {
-            return mConfig.CmShellComand;
+            string cmShellCommand = string.Format("{0} shell --logo", mExecutablePath);
+            Console.WriteLine("CmShell is {0}", cmShellCommand);
+            return cmShellCommand;
         }
 
         public string GetClientPath()
         {
-            return mConfig.ClientPath;
-        }
-
-        LaunchCommandConfig mConfig;
-
-        LaunchCommand()
-        {
-            mConfig = new LaunchCommandConfig();
-
-            if (String.IsNullOrEmpty(mConfig.CmShellComand))
-                mConfig.CmShellComand = string.Format("{0} shell --logo", mExecutablePath);
-
-            if (mConfig.ClientPath == null)
-                mConfig.ClientPath = string.Empty;
-
-            if (mConfig.CmShellComand == null)
-                mConfig.CmShellComand = string.Empty;
+            return string.Empty;
         }
 
         static LaunchCommand mInstance = null;
-        string mExecutablePath = "bcm";
+        string mExecutablePath = "cm";
     }
 }

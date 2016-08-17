@@ -241,7 +241,7 @@ namespace Codice.CmdRunner
             out string error,
             bool bShell)
         {
-            if (!bShell || !cmd.StartsWith("bcm") || !cmd.StartsWith("cm"))
+            if (!bShell || ! (cmd.StartsWith("bcm") || cmd.StartsWith("cm")))
             {
                 return base.RunAndWait(cmd, workingdir, out output, out error);
             }
