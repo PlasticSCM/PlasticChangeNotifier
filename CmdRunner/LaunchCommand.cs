@@ -22,6 +22,11 @@ namespace Codice.CmdRunner
             return mInstance;
         }
 
+        public void SetCm(string cm)
+        {
+            mExecutablePath = cm;
+        }
+
         public string GetCmShellCommand()
         {
             return mConfig.CmShellComand;
@@ -49,6 +54,6 @@ namespace Codice.CmdRunner
         }
 
         static LaunchCommand mInstance = null;
-        static string mExecutablePath = "bcm";
+        string mExecutablePath = "bcm";
     }
 }
