@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ToastConsole")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("PlasticNotifier")]
+[assembly: AssemblyDescription("Small app to watch Plastic SCM repos")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ToastConsole")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyProduct("Plastic Notifier")]
+[assembly: AssemblyCopyright("Copyright ©  2016 - Codice Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
