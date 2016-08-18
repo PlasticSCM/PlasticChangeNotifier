@@ -23,6 +23,11 @@ You can also use the extra params to specify a 'since' date (useful to see it in
     bcm find changesets where date >= '8/18/2016 12:06:49' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"
     bcm find changesets where date >= '8/18/2016 12:07:19' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"
 
+# How it is implemented
+This code takes advantage of:
+* CmdRunner (slightly cleaned up for my own purposes here) https://github.com/PlasticSCM/plastic-cmdrunner: a thing layer of C# code on top of the Plastic SCM command line, very helpful to do automation. It is documented here https://www.plasticscm.com/documentation/cmdrunner/plastic-scm-version-control-cmdrunner-guide.shtml.
+* Toast Notifications: some code to show Toast Notifications (Windows) from a CLI app, which I described here: http://blog.plasticscm.com/2016/08/how-to-send-windows-toast-notifications.html
+
 # Future work
 Feel free to pull the code and improve it! There are some pending things:
 * Multi-repo watching support.
