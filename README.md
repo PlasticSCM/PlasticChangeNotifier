@@ -1,6 +1,8 @@
 # PlasticChangeNotifier
 A Windows utility to watch Plastic SCM repositories and notify changes on the desktop.
 
+![A Toast Notification in action showing a new changeset](https://raw.githubusercontent.com/PlasticSCM/PlasticChangeNotifier/master/screenshots/screenshot.png)
+
 # How to run it
 Download the plasticnotifier.exe binary from 'releases' (just a single binary thanks to Fody/Costura) or build your own code (remember you can directly pull from Plastic SCM from a GitHub repo).
 
