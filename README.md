@@ -8,21 +8,20 @@ Then run something as follows to start monitoring your repo:
 
 `plasticnotifier.exe yourepository@yourserver:8087`
 
-You can also use the extra params to specify a 'since' date (useful to see it in action the first time if you can't wait).
+You can also use the extra params to specify a 'since' date (useful to see it in action the first time if you can't wait). A typical session looks like this:
 
-`plasticnotifier.exe --cm bcm codice@diana.codicefactory.com:9095 --since "8/18/2016 0:00:00"`
-`Monitoring repo codice@diana.codicefactory.com:9095`
-`Type 'exit' to quit`
-`cm set to bcm`
-`bcm find changesets where date >= '8/18/2016 00:00:00' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"`
-`CmShell is bcm shell --logo`
-`[LINE]6982137|||jesusmg|||/main/SCM18363/SCM18560|||fix javacm`
-`[LINE]6982138|||danipen|||/main/SCM18378/scm18539-vio/scm18564|||Preserve diagram position after the incremental loading`
-
-`The toast has timed out`
-`The user dismissed the toast`
-`bcm find changesets where date >= '8/18/2016 12:06:49' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"`
-`bcm find changesets where date >= '8/18/2016 12:07:19' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"`
+    plasticnotifier.exe --cm bcm codice@diana.codicefactory.com:9095 --since "8/18/2016 0:00:00"
+    Monitoring repo codice@diana.codicefactory.com:9095
+    Type 'exit' to quit
+    cm set to bcm
+    bcm find changesets where date >= '8/18/2016 00:00:00' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"
+    CmShell is bcm shell --logo
+    [LINE]6982137|||jesusmg|||/main/SCM18363/SCM18560|||fix javacm
+    [LINE]6982138|||danipen|||/main/SCM18378/scm18539-vio/scm18564|||Preserve diagram position after the incremental loading
+    The toast has timed out
+    The user dismissed the toast
+    bcm find changesets where date >= '8/18/2016 12:06:49' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"
+    bcm find changesets where date >= '8/18/2016 12:07:19' on repository 'codice@diana.codicefactory.com:9095' --nototal --format="[LINE]{changesetid}|||{owner}|||{branch}|||{comment}"
 
 # Future work
 Feel free to pull the code and improve it! There are some pending things:
