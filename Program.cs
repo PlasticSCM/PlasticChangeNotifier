@@ -9,8 +9,6 @@ namespace PlasticNotifier
     {
         static void Main(string[] args)
         {
-            Toaster.ShortCutCreator.TryCreateShortcut(APP_ID, "PlasticNotifier");
-
             CommandLineArguments cla = CommandLineArguments.Parse(args);
 
             if (cla == null)
@@ -18,6 +16,9 @@ namespace PlasticNotifier
                 CommandLineArguments.ShowUsage();
                 return;
             }
+
+            if (!cla.UseWinFormsNotifier)
+                Toaster.ShortCutCreator.TryCreateShortcut(APP_ID, "PlasticNotifier");
 
             Console.WriteLine("Monitoring repo {0}", cla.RepoToMonitor);
 
@@ -75,11 +76,19 @@ namespace PlasticNotifier
                     if (parts.Length < 2)
                         break;
 
-                    Toaster.ShowImageToast(
-                        APP_ID,
-                        string.Format("{0} - {1}", parts[1], parts[2]),
-                        parts[3],
-                        logoFile);
+                    if (!cla.UseWinFormsNotifier)
+                    {
+                        Toaster.ShowImageToast(
+                            APP_ID,
+                            string.Format("{0} - {1}", parts[1], parts[2]),
+                            parts[3],
+                            logoFile);
+                    }
+                    else
+                    {
+                        Notification.Show(
+                            string.Format("{0} - {1}", parts[1], parts[2]), parts[3]);
+                    }
                 }
 
                 last = last = DateTime.Now;
@@ -107,6 +116,7 @@ namespace PlasticNotifier
 
             internal string RepoToMonitor;
             internal DateTime Since = DateTime.Now;
+            internal bool UseWinFormsNotifier = false;
 
             static internal CommandLineArguments Parse(string[] args)
             {
@@ -131,6 +141,9 @@ namespace PlasticNotifier
                         case "--since":
                             if (args.Length == i) return null;
                             result.Since = DateTime.Parse(args[i++]);
+                            break;
+                        case "--winforms":
+                            result.UseWinFormsNotifier = true;
                             break;
                         default:
                             result.RepoToMonitor = arg;
